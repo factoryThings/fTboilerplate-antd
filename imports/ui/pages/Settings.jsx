@@ -1,14 +1,9 @@
-import React from 'react';
-import { Header, Image } from 'semantic-ui-react';
+import React from "react"
 
-class Settings extends React.Component {
-  render() {
-    return (
-      <Header as="h2" textAlign="center">
-        <Image src="/ftlogo.png" />
-        <p>Settings</p>
-      </Header>
-    );
-  }
-}
-export default Settings;
+const Settings = () => (
+  <h2>
+    <img src="/ftlogo.png" alt="logo" />
+    <p>Settings</p>
+  </h2>
+)
+export default Settings

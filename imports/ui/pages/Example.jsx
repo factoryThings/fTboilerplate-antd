@@ -1,15 +1,9 @@
-import React from 'react';
-import { Header, Image } from 'semantic-ui-react';
+import React from "react"
 
-class Example extends React.Component {
-  render() {
-    return (
-      <Header as="h2" textAlign="center">
-        <Image src="/ftlogo.png" />
-        <p>Example</p>
-        <p>(Only visible when logged in.)</p>
-      </Header>
-    );
-  }
-}
-export default Example;
+const Example = () => (
+  <h2>
+    <img src="/ftlogo.png" alt="logo" />
+    <p>Example</p>
+  </h2>
+)
+export default Example
