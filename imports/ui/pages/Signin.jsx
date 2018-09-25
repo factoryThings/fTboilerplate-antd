@@ -95,7 +95,7 @@ class Signin extends React.Component {
             {/* Submit button */}
               <FormItem>
                 <Button type="primary" htmlType="submit" icon="login">
-                Singin
+                Sign In
                 </Button>
               </FormItem>
 
@@ -105,7 +105,7 @@ class Signin extends React.Component {
           </Form>
         {error !== "" && (
           <Alert
-            message={alert}
+            message={error}
             type="error"
             showIcon
             closable

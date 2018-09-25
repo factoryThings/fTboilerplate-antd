@@ -19,16 +19,14 @@ class Signup extends React.Component {
   constructor (props) {
     super(props)
     this.state = { email: "", password: "", error: "" }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   // Using a ref is accessing the DOM directly and not preferred
   // The React way to get the value from an input is using onChange
-  handleChange (e, { name, value }) {
+  handleChange = (e, { name, value }) => {
     this.setState({ [name]: value })
   }
-  handleSubmit (e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     const { email, password } = this.state
     Accounts.createUser({ email, username: email, password }, err => {
@@ -49,7 +47,7 @@ class Signup extends React.Component {
     const { error } = this.state
     return (
       <div>
-        <h2 as="h2" textAlign="center">
+        <h2>
           <img src="/ftlogo.png" alt="logo" /> Register your account
         </h2>
           <Form onSubmit={this.handleSubmit}>
@@ -78,7 +76,7 @@ class Signup extends React.Component {
             {/* Submit button */}
               <FormItem>
                 <Button type="primary" htmlType="submit" icon="user-add">
-              Sing up
+              Sign Up
                 </Button>
               </FormItem>
                 <Link href="/signin" to="/signin">
@@ -87,7 +85,7 @@ class Signup extends React.Component {
           </Form>
         {error !== "" && (
           <Alert
-            message={alert}
+            message={error}
             type="error"
             showIcon
             closable

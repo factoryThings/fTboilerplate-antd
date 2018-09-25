@@ -1,91 +1,62 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import { Meteor } from "meteor/meteor"
-import { withTracker } from "meteor/react-meteor-data"
-import { Link, withRouter } from "react-router-dom"
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Meteor } from 'meteor/meteor'
+import { withTracker } from 'meteor/react-meteor-data'
+import { Link, withRouter } from 'react-router-dom'
 
-import Menu from "antd/lib/menu"
-import Icon from "antd/lib/icon"
+import Menu from 'antd/lib/menu'
+import Icon from 'antd/lib/icon'
 
 const { Item } = Menu
 
 class TopHeader extends Component {
-  state = {
-    current: "mail",
+  state = { current: 'mail' }
+
+  handleClick = (e) => {
+    console.log('click ', e)
+    this.setState({ current: e.key })
   }
-  handleClick = e => {
-    console.log("click ", e)
-    this.setState({
-      current: e.key,
-    })
-  }
-  render () {
+
+  render() {
     const { currentUser } = this.props
     return (
-      <Menu
-        onClick={this.handleClick}
-        selectedKeys={[ this.state.current ]}
-        mode="horizontal"
-      >
+      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
         <Item key="home">
-          <span>
-            <Icon type="home" />
-              <Link href="/signin" to="/signin">
-              Home
-              </Link>
-          </span>
+          <Link href="/" to="/">
+            <Icon type="home" /> Home
+          </Link>
         </Item>
-          <Item key="example">
-            <span>
-              <Icon type="api" />
-                <Link href="/example" to="/example">
-              Example
-                </Link>
-            </span>
-          </Item>
-            <Item key="signin">
-              <span>
-                <Icon type="user" />
-                  <Link href="/signin" to="/signin">
-              Sign in
-                  </Link>
-              </span>
-            </Item>
-              <Item key="signup">
-                <span>
-                  <Icon type="select" />
-                    <Link href="/signup" to="/signup">
-              Sign up
-                    </Link>
-                </span>
-              </Item>
-                <Item key="singup">
-                  <span>
-                    <Icon type="poweroff" />
-                      <Link href="/signout" to="/signout">
-              Sign out
-                      </Link>
-                  </span>
-                </Item>
-
-                  <Item key="notpage">
-                    <span>
-                      <Icon type="exclamation-circle" />
-                        <Link href="/nopage" to="/nopage">
-              Page not found
-                        </Link>
-                    </span>
-                  </Item>
+        <Item key="example">
+          <Link href="/example" to="/example">
+            <Icon type="api" /> Example
+          </Link>
+        </Item>
+        <Item key="signin">
+          <Link href="/signin" to="/signin">
+            <Icon type="user" /> Sign in
+          </Link>
+        </Item>
+        <Item key="signup">
+          <Link href="/signup" to="/signup">
+            <Icon type="select" /> Sign up
+          </Link>
+        </Item>
+        <Item key="signout">
+          <Link href="/signout" to="/signout">
+            <Icon type="poweroff" /> Sign out
+          </Link>
+        </Item>
+        <Item key="notfound">
+          <Link href="/nopage" to="/nopage">
+            <Icon type="exclamation-circle" /> Page not found
+          </Link>
+        </Item>
       </Menu>
     )
   }
 }
 
-TopHeader.propTypes = {
-  currentUser: PropTypes.string.isRequired,
-}
+TopHeader.propTypes = { currentUser: PropTypes.string.isRequired }
 
-const TopHeaderContainer = withTracker(() => ({
-  currentUser: Meteor.user() ? Meteor.user().username : "",
-}))(TopHeader)
+const TopHeaderContainer = withTracker(() => ({ currentUser: Meteor.user() ? Meteor.user().username : '' }))(TopHeader)
 export default withRouter(TopHeaderContainer)
