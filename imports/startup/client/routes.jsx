@@ -1,39 +1,43 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { render } from 'react-dom'
-import { Meteor } from 'meteor/meteor'
+import React from "react"
+import PropTypes from "prop-types"
+import { render } from "react-dom"
+import { Meteor } from "meteor/meteor"
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
-} from 'react-router-dom'
+} from "react-router-dom"
 
 // Public components
-import Home from '../../ui/pages/Home.jsx'
-import Example from '../../ui/pages/Example.jsx'
-import Settings from '../../ui/pages/Settings.jsx'
-import Account from '../../ui/pages/Account.jsx'
-import NotFound from '../../ui/pages/NotFound.jsx'
-import Signin from '../../ui/pages/Signin.jsx'
-import Signup from '../../ui/pages/Signup.jsx'
-import Signout from '../../ui/pages/Signout.jsx'
+import Home from "../../ui/pages/Home.jsx"
+import Example from "../../ui/pages/Example.jsx"
+import Settings from "../../ui/pages/Settings.jsx"
+import Account from "../../ui/pages/Account.jsx"
+import NotFound from "../../ui/pages/NotFound.jsx"
+import Signin from "../../ui/pages/Signin.jsx"
+import Signup from "../../ui/pages/Signup.jsx"
+import Signout from "../../ui/pages/Signout.jsx"
+import TopHeader from "../..//ui/components/TopHeader.jsx"
 
 Meteor.startup(() => {
   render(
     <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
-        <ProtectedRoute path="/example" component={Example} />
-        <Route path="/account" component={Account} />
-        <ProtectedRoute path="/settings" component={Settings} />
-        <ProtectedRoute path="/signout" component={Signout} />
-        <Route component={NotFound} />
-      </Switch>
+      <div>
+        <TopHeader />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/signup" component={Signup} />
+          <ProtectedRoute path="/example" component={Example} />
+          <Route path="/account" component={Account} />
+          <ProtectedRoute path="/settings" component={Settings} />
+          <ProtectedRoute path="/signout" component={Signout} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
     </Router>,
-    document.getElementById('root')
+    document.getElementById("root")
   )
 })
 
@@ -52,7 +56,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/signin',
+            pathname: "/signin",
             state: { from: props.location },
           }}
         />
@@ -63,5 +67,5 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
 
 ProtectedRoute.propTypes = {
   component: PropTypes.func.isRequired,
-  location: PropTypes.object,
+  location: PropTypes.object.isRequired,
 }

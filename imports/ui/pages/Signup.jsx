@@ -3,15 +3,22 @@
 
 // login page overrides the form’s submit event and call Meteor’s loginWithPassword()
 // Authentication errors modify the component’s state to be displayed
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Form, Grid, Header, Image, Message, Segment } from 'antd'
-import { Accounts } from 'meteor/accounts-base'
+import React from "react"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
+import { Accounts } from "meteor/accounts-base"
 
-export default class Signup extends React.Component {
+import Form from "antd/lib/form"
+import Icon from "antd/lib/icon"
+import Input from "antd/lib/input"
+import Button from "antd/lib/button"
+import Alert from "antd/lib/alert"
+
+const { Item: FormItem } = Form
+class Signup extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { email: '', password: '', error: '' }
+    this.state = { email: "", password: "", error: "" }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -22,8 +29,8 @@ export default class Signup extends React.Component {
     this.setState({ [name]: value })
   }
   handleSubmit (e) {
+    e.preventDefault()
     const { email, password } = this.state
-
     Accounts.createUser({ email, username: email, password }, err => {
       if (err) {
         this.setState({
@@ -36,51 +43,65 @@ export default class Signup extends React.Component {
   }
 
   render () {
+    const {
+      form: { getFieldDecorator },
+    } = this.props
+    const { error } = this.state
     return (
-      <Container>
-        <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              <Image src="/ftlogo.png" /> Register your account
-            </Header>
-              <Form onSubmit={this.handleSubmit}>
-                <Segment stacked>
-                  <Form.Input
-                    label="Email"
-                    icon="user"
-                    iconPosition="left"
-                    name="email"
-                    type="email"
-                    placeholder="E-mail address"
-                    onChange={this.handleChange}
-                  />
-                    <Form.Input
-                      label="Password"
-                      icon="lock"
-                      iconPosition="left"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      onChange={this.handleChange}
-                    />
-                      <Form.Button content="Submit" />
-                </Segment>
-              </Form>
-                <Message>
-              Already have an account? Login <Link to="/signin">here</Link>
-                </Message>
-            {this.state.error === '' ? (
-              ''
-            ) : (
-              <Message
-                error
-                header="Registration was not successful"
-                content={this.state.error}
+      <div>
+        <h2 as="h2" textAlign="center">
+          <img src="/ftlogo.png" alt="logo" /> Register your account
+        </h2>
+          <Form onSubmit={this.handleSubmit}>
+            {/* Email input */}
+              <FormItem label="Email">
+                {getFieldDecorator("email", {
+              rules: [
+                { required: true, message: "Please input your username!" },
+              ],
+            })(<Input prefix={<Icon type="user" />} placeholder="Username" />)}
+              </FormItem>
+            {/* Password input */}
+              <FormItem label="Password">
+                {getFieldDecorator("password", {
+              rules: [
+                { required: true, message: "Please input your Password!" },
+              ],
+            })(
+              <Input
+                prefix={<Icon type="lock" />}
+                type="password"
+                placeholder="Password"
               />
             )}
-          </Grid.Column>
-        </Grid>
-      </Container>
+              </FormItem>
+            {/* Submit button */}
+              <FormItem>
+                <Button type="primary" htmlType="submit" icon="user-add">
+              Sing up
+                </Button>
+              </FormItem>
+                <Link href="/signin" to="/signin">
+            Already have an account?
+                </Link>
+          </Form>
+        {error !== "" && (
+          <Alert
+            message={alert}
+            type="error"
+            showIcon
+            closable
+            closeText="Close"
+          />
+        )}
+      </div>
     )
   }
 }
+
+Signup.propTypes = {
+  form: PropTypes.object.isRequired,
+}
+
+const WrappedSignup = Form.create()(Signup)
+export default WrappedSignup

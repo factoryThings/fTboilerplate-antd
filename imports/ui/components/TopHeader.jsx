@@ -1,46 +1,91 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Meteor } from 'meteor/meteor'
-import { withRouter, NavLink } from 'react-router-dom'
-import { Menu, Dropdown } from 'antd'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Meteor } from "meteor/meteor"
+import { withTracker } from "meteor/react-meteor-data"
+import { Link, withRouter } from "react-router-dom"
 
-class TopHeader extends React.Component {
+import Menu from "antd/lib/menu"
+import Icon from "antd/lib/icon"
+
+const { Item } = Menu
+
+class TopHeader extends Component {
+  state = {
+    current: "mail",
+  }
+  handleClick = e => {
+    console.log("click ", e)
+    this.setState({
+      current: e.key,
+    })
+  }
   render () {
-    console.log(this)
+    const { currentUser } = this.props
     return (
-      <Menu>
-        <Menu.Item>Home</Menu.Item>
-          <Menu.Item>Example</Menu.Item>
-            <Menu.Item>Sign In</Menu.Item>
-              <Menu.Item>Sign Up</Menu.Item>
-                <Menu.Item>Not Found Page</Menu.Item>
-                  <Menu.Item>
-                    {this.props.currentUser === '' ? (
-                      <Dropdown text="Please Sign In">
-                        <Dropdown.Menu>
-                          <Dropdown.Item icon="user" text="Sign In" />
-                            <Dropdown.Item icon="add user" text="Sign Up" />
-                        </Dropdown.Menu>
-                      </Dropdown>
-          ) : (
-            <Dropdown
-              text={this.props.currentUser}
-              pointing="top right"
-              icon="user"
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item icon="user" text="Account" />
-                  <Dropdown.Item icon="settings" text="Settings" />
-                    <Dropdown.Item icon="sign out" text="Sign Out" />
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
-                  </Menu.Item>
+      <Menu
+        onClick={this.handleClick}
+        selectedKeys={[ this.state.current ]}
+        mode="horizontal"
+      >
+        <Item key="home">
+          <span>
+            <Icon type="home" />
+              <Link href="/signin" to="/signin">
+              Home
+              </Link>
+          </span>
+        </Item>
+          <Item key="example">
+            <span>
+              <Icon type="api" />
+                <Link href="/example" to="/example">
+              Example
+                </Link>
+            </span>
+          </Item>
+            <Item key="signin">
+              <span>
+                <Icon type="user" />
+                  <Link href="/signin" to="/signin">
+              Sign in
+                  </Link>
+              </span>
+            </Item>
+              <Item key="signup">
+                <span>
+                  <Icon type="select" />
+                    <Link href="/signup" to="/signup">
+              Sign up
+                    </Link>
+                </span>
+              </Item>
+                <Item key="singup">
+                  <span>
+                    <Icon type="poweroff" />
+                      <Link href="/signout" to="/signout">
+              Sign out
+                      </Link>
+                  </span>
+                </Item>
+
+                  <Item key="notpage">
+                    <span>
+                      <Icon type="exclamation-circle" />
+                        <Link href="/nopage" to="/nopage">
+              Page not found
+                        </Link>
+                    </span>
+                  </Item>
       </Menu>
     )
   }
 }
 
 TopHeader.propTypes = {
-  currentUser: PropTypes.string,
+  currentUser: PropTypes.string.isRequired,
 }
+
+const TopHeaderContainer = withTracker(() => ({
+  currentUser: Meteor.user() ? Meteor.user().username : "",
+}))(TopHeader)
+export default withRouter(TopHeaderContainer)

@@ -1,10 +1,9 @@
-import React from 'react'
-import { Header, Image } from 'antd'
+import React from "react"
 
 const Example = () => (
-  <Header as="h2" textAlign="center">
-    <Image src="/ftlogo.png" />
+  <h2>
+    <img src="/ftlogo.png" alt="logo" />
     <p>Example</p>
-  </Header>
+  </h2>
 )
 export default Example

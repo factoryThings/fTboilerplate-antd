@@ -47,9 +47,16 @@
     "jest-enzyme": "^4.0.2"
   },
   "babel": {
-    "presets": ["env", "react", "stage-2"]
+    "presets": [
+      "env",
+      "react",
+      "stage-2"
+    ]
   },
-  "eslintIgnore": ["jquery.min.js", "snap.svg-min.js"],
+  "eslintIgnore": [
+    "jquery.min.js",
+    "snap.svg-min.js"
+  ],
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
@@ -60,7 +67,11 @@
         "experimentalObjectRestSpread": true
       }
     },
-    "plugins": ["meteor", "react", "jsx-a11y"],
+    "plugins": [
+      "meteor",
+      "react",
+      "jsx-a11y"
+    ],
     "extends": [
       "plugin:meteor/guide",
       "@meteorjs/eslint-config-meteor",
@@ -84,7 +95,10 @@
       "react/forbid-prop-types": [
         "error",
         {
-          "forbid": ["any", "array"]
+          "forbid": [
+            "any",
+            "array"
+          ]
         }
       ],
       "no-console": 1,
@@ -101,16 +115,27 @@
           ]
         }
       ],
-      "semi": ["error", "never"],
+      "semi": [
+        "error",
+        "never"
+      ],
       "no-trailing-spaces": [
         "error",
         {
           "ignoreComments": true
         }
       ],
-      "comma-dangle": ["error", "always-multiline"],
-      "key-spacing": ["error"],
-      "space-before-function-paren": ["error", "always"],
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ],
+      "key-spacing": [
+        "error"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "always"
+      ],
       "comma-spacing": [
         "error",
         {
@@ -119,8 +144,14 @@
         }
       ],
       "prefer-arrow-callback": "error",
-      "array-bracket-spacing": ["error", "always"],
-      "object-curly-spacing": ["error", "always"]
+      "array-bracket-spacing": [
+        "error",
+        "always"
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ]
     }
   }
 }
