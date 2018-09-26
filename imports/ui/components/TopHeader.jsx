@@ -10,7 +10,7 @@ import Icon from 'antd/lib/icon'
 const { Item } = Menu
 
 class TopHeader extends Component {
-  state = { current: 'mail' }
+  state = { current: 'home' }
 
   handleClick = (e) => {
     console.log('click ', e)
