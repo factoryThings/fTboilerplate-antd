@@ -6,8 +6,10 @@ import { Link, withRouter } from 'react-router-dom'
 
 import Menu from 'antd/lib/menu'
 import Icon from 'antd/lib/icon'
+import Layout from 'antd/lib/layout'
 
-const { Item } = Menu
+const { Header } = Layout
+const { Item, SubMenu } = Menu
 
 class TopHeader extends Component {
   state = { current: 'home' }
@@ -19,39 +21,84 @@ class TopHeader extends Component {
 
   render() {
     const { currentUser } = this.props
+    const { current } = this.state
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Item key="home">
-          <Link href="/" to="/">
-            <Icon type="home" /> Home
-          </Link>
-        </Item>
-        <Item key="example">
-          <Link href="/example" to="/example">
-            <Icon type="api" /> Example
-          </Link>
-        </Item>
-        <Item key="signin">
-          <Link href="/signin" to="/signin">
-            <Icon type="user" /> Sign in
-          </Link>
-        </Item>
-        <Item key="signup">
-          <Link href="/signup" to="/signup">
-            <Icon type="select" /> Sign up
-          </Link>
-        </Item>
-        <Item key="signout">
-          <Link href="/signout" to="/signout">
-            <Icon type="poweroff" /> Sign out
-          </Link>
-        </Item>
-        <Item key="notfound">
-          <Link href="/nopage" to="/nopage">
-            <Icon type="exclamation-circle" /> Page not found
-          </Link>
-        </Item>
-      </Menu>
+      <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['home']}
+          selectedKeys={[current]}
+          style={{ lineHeight: '64px' }}
+          onClick={this.handleClick}
+        >
+          <Item key="home">
+            <Link href="/" to="/">
+              <Icon type="home" /> Home
+            </Link>
+          </Item>
+          <Item key="example">
+            <Link href="/example" to="/example">
+              <Icon type="api" /> Example
+            </Link>
+          </Item>
+          <Item key="signin">
+            <Link href="/signin" to="/signin">
+              <Icon type="user" /> Sign in
+            </Link>
+          </Item>
+          <Item key="notfound">
+            <Link href="/nopage" to="/nopage">
+              <Icon type="exclamation-circle" /> Page not found
+            </Link>
+          </Item>
+          {currentUser ? (
+            <SubMenu
+              key="user"
+              title={(
+                <span>
+                  <Icon type="user" />
+                  {currentUser}
+                </span>
+              )}
+              style={{ float: 'right' }}
+            >
+              <Item key="settings">
+                <Link href="/settings" to="/settings">
+                  <Icon type="settings" /> Settings
+                </Link>
+              </Item>
+              <Item key="signout">
+                <Link href="/signout" to="/signout">
+                  <Icon type="Sign out" /> Sign Out
+                </Link>
+              </Item>
+            </SubMenu>
+          ) : (
+            <SubMenu
+              key="user"
+              title={(
+                <span>
+                  <Icon type="user" />
+                  Please Sign In
+                </span>
+                )}
+              style={{ float: 'right' }}
+            >
+              <Item key="signin">
+                <Link href="/signin" to="/signin">
+                  <Icon type="user" /> Sign In
+                </Link>
+              </Item>
+              <Item key="signout">
+                <Link href="/signup" to="/signup">
+                  <Icon type="select" /> Sign up
+                </Link>
+              </Item>
+            </SubMenu>
+          )}
+        </Menu>
+      </Header>
     )
   }
 }

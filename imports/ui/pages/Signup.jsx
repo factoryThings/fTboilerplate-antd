@@ -22,17 +22,15 @@ class Signup extends React.Component {
   }
 
   handleSubmit = (e) => {
+    const { form } = this.props
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
+    form.validateFields((formErr, values) => {
+      if (!formErr) {
         Accounts.createUser({ email: values.email, username: values.email, password: values.password }, (err) => {
           if (err) {
             this.setState({ error: err.reason })
           } else {
-            this.setState({
-              error: '',
-              redirectToReferer: true,
-            })
+            this.setState({ error: '' })
           }
         })
       }
@@ -50,11 +48,15 @@ class Signup extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {/* Email input */}
           <FormItem label="Email">
-            {getFieldDecorator('email', { rules: [{ required: true, message: 'Please input your username!' }] })(<Input prefix={<Icon type="user" />} placeholder="Username" />)}
+            {getFieldDecorator('email', { rules: [{ required: true, message: 'Please input your username!' }] })(
+              <Input prefix={<Icon type="user" />} placeholder="Username" />,
+            )}
           </FormItem>
           {/* Password input */}
           <FormItem label="Password">
-            {getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your Password!' }] })(<Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />)}
+            {getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your Password!' }] })(
+              <Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />,
+            )}
           </FormItem>
           {/* Submit button */}
           <FormItem>

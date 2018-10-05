@@ -1,6 +1,6 @@
-import React from "react"
-import { Meteor } from "meteor/meteor"
-import { Redirect } from "react-router-dom"
+import React from 'react'
+import { Meteor } from 'meteor/meteor'
+import { Redirect } from 'react-router-dom'
 
 const Signout = () => {
   Meteor.logout()

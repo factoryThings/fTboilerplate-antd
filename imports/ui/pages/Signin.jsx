@@ -25,8 +25,9 @@ class Signin extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
+    const { form } = this.props
+    form.validateFields((formErr, values) => {
+      if (!formErr) {
         Meteor.loginWithPassword(values.email, values.password, (err) => {
           if (err) {
             this.setState({ error: err.reason })
@@ -47,11 +48,11 @@ class Signin extends React.Component {
       form: { getFieldDecorator },
       location: { state },
     } = this.props
-    const { error } = this.state
+    const { error, redirectToReferer } = this.state
     const { from } = state || { from: { pathname: '/' } }
 
     // if correct authentication, redirect to page instead of login screen
-    if (this.state.redirectToReferer) {
+    if (redirectToReferer) {
       return <Redirect to={from} />
     }
 
@@ -63,12 +64,16 @@ class Signin extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {/* Email input */}
           <FormItem label="Email">
-            {getFieldDecorator('email', { rules: [{ required: true, message: 'Please input your username!' }] })(<Input prefix={<Icon type="user" />} placeholder="Username" />)}
+            {getFieldDecorator('email', { rules: [{ required: true, message: 'Please input your username!' }] })(
+              <Input prefix={<Icon type="user" />} placeholder="Username" />,
+            )}
           </FormItem>
 
           {/* Password input */}
           <FormItem label="Password">
-            {getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your Password!' }] })(<Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />)}
+            {getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your Password!' }] })(
+              <Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />,
+            )}
           </FormItem>
 
           {/* Submit button */}
