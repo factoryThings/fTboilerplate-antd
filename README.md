@@ -1,5 +1,5 @@
 This package is a boilerplate using the following components:
-- Meteor V1.8 (rc17)
+- Meteor V1.8
 - React 16
 - React Router V4
 - AntD 3
